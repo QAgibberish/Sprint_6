@@ -14,11 +14,11 @@ class TestOrder:
         order_page.click_order_button(button_position)
         order_page.input_data(order_data)
         order_page.confirm_order()
-        assert order_page.wait_popup
+        assert order_page.wait_popup()
 
         order_page.click_to_status_button()
         order_page.click_scooter_logo()
-        assert order_page.check_redirect_to_main_page
+        assert order_page.check_redirect_to_main_page()
 
         order_page.click_yandex_logo()
-        assert order_page.check_redirect_to_dzen
+        assert order_page.check_redirect_to_dzen()

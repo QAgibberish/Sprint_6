@@ -1,6 +1,6 @@
 import allure
 
-from Data import url
+from Data.url import *
 from pages.base_page import BasePage
 from locators.order_page_locators import OrderPageLocators
 from locators.main_page_locators import MainPageLocators
@@ -61,8 +61,10 @@ class OrderPage(BasePage):
 
     @allure.step("Проверить переход на главную страницу")
     def check_redirect_to_main_page(self):
-        return self.current_url == url.main_site
+        actual_url = self.wait_and_get_url(main_site)
+        return actual_url == main_site
 
     @allure.step("Проверить переход на страницу Дзена")
     def check_redirect_to_dzen(self):
-        return self.current_url == url.dzen
+        actual_url = self.switch_and_get_url(dzen)
+        return actual_url == dzen

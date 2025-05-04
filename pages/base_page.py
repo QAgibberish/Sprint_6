@@ -36,6 +36,22 @@ class BasePage:
         return WebDriverWait(self.driver, timeout).until(
             EC.text_to_be_present_in_element_attribute(locator, attribute, value))
 
-    @allure.step("Получить текущий URL")
-    def current_url(self):
-        return self.driver.current_url
+    @allure.step("Дождаться смены URL и получить адрес")
+    def wait_and_get_url(self, expected_url, timeout=40):
+        try:
+            WebDriverWait(self.driver, timeout).until(EC.url_to_be(expected_url))
+            current_url = self.driver.current_url
+            return current_url
+        except:
+            return None
+
+    @allure.step("Переключиться на новую вкладку и получить адрес")
+    def switch_and_get_url(self, expected_url, timeout=40):
+        try:
+            WebDriverWait(self.driver, timeout).until(EC.number_of_windows_to_be(2))
+            self.driver.switch_to.window(self.driver.window_handles[-1])
+            WebDriverWait(self.driver, timeout).until(EC.url_to_be(expected_url))
+            current_url = self.driver.current_url
+            return current_url
+        except:
+            return None
